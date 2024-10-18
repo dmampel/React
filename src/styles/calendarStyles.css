@@ -94,9 +94,6 @@
   line-height: 16px;
 }
 
-
-
-
 /* Estilos Generales */
 
 /* App.css */
@@ -274,22 +271,14 @@
   color: #ff267f
 }
 
-
 .react-calendar__tile--active {
   background: #007bff;
   color: white;
 }
 
-
-
-
 .event-form {
   margin-bottom: 20px;
 }
-
-
-
-
 
 .event-form input {
   padding: 8px;

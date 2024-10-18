@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Header from './Header';
 import '../styles/calendarStyles.css';
-
-
 
 export default function BigCalendar({ theme, handleClick }) {
     const [selectedDate, setSelectedDate] = useState(null);
     const [eventName, setEventName] = useState("");
     const [events, setEvents] = useState([]);
+
+    // Cargar eventos desde Local Storage al iniciar el componente
+    useEffect(() => {
+        const storedEvents = JSON.parse(localStorage.getItem("events"));
+        if (storedEvents) {
+            setEvents(storedEvents);
+        }
+    }, []);
+
+    // Guardar eventos en Local Storage cada vez que cambien
+    useEffect(() => {
+        localStorage.setItem("events", JSON.stringify(events));
+    }, [events]);
 
     const Date_Click_Fun = (date) => {
         setSelectedDate(date);
@@ -26,7 +37,6 @@ export default function BigCalendar({ theme, handleClick }) {
             setEvents([...events, newEvent]);
             setSelectedDate(null);
             setEventName("");
-            setSelectedDate(newEvent.date);
         }
     };
     const Update_Event_Fun = (eventId, newName) => {
@@ -68,77 +78,62 @@ export default function BigCalendar({ theme, handleClick }) {
                                         ? "event-marked"
                                         : ""
                             }
-                        />{" "}
+                        />
                     </div>
                     <div className="event-container self-start w-[40%]">
-                        {" "}
                         {selectedDate && (
                             <div className="event-form">
-                                <h2 className="mb-10 text-3xl font-light">Añadir</h2>{" "}
-                                <p className="text-white font-light mb-5 text-xl">{" "}Fecha Seleccionada: <strong className="underline decoration-emerald-400">{selectedDate.toDateString()}</strong>{" "}
-                                </p>{" "}
-                                <input className="rounded-full" type="text" placeholder="Evento..." value={eventName} onChange={Event_Data_Update} />{" "}
+                                <h2 className="mb-10 text-3xl font-light">Eventos</h2>
+                                <p className="text-white font-light mb-5 text-xl">Fecha Seleccionada: <strong className="underline decoration-emerald-400">{selectedDate.toDateString()}</strong></p>
+                                <input className="rounded-full" type="text" placeholder="Evento..." value={eventName} onChange={Event_Data_Update} />
                                 <button className="create-btn rounded-full" onClick={Create_Event_Fun}>
-                                    Agregar{" "}
-                                </button>{" "}
+                                    Agregar
+                                </button>
                             </div>
                         )}
                         {events.length > 0 && selectedDate && (
                             <div className="event-list mt-10">
-                                <h2 className="mb-5 text-3xl font-light">Eventos Actuales</h2>{" "}
+                                <h2 className="mb-5 text-3xl font-light">Eventos Actuales</h2>
                                 <div className="event-cards">
-                                    {" "}
                                     {events.map((event) =>
-                                        event.date.toDateString() ===
-                                            selectedDate.toDateString() ? (
+                                        event.date.toDateString() === selectedDate.toDateString() ? (
                                             <div key={event.id} className="event-card rounded-3xl">
                                                 <div className="event-card-header">
-                                                    <span className="event-date">
-                                                        {" "}
-                                                        {event.date.toDateString()}{" "}
-                                                    </span>{" "}
+                                                    <span className="event-date">{event.date.toDateString()}</span>
                                                     <div className="event-actions">
                                                         <button
                                                             className="update-btn"
                                                             onClick={() =>
                                                                 Update_Event_Fun(
                                                                     event.id,
-                                                                    prompt(
-                                                                        "ENTER NEW TITLE",
-                                                                    ),
+                                                                    prompt("ENTER NEW TITLE"),
                                                                 )
                                                             }
                                                         >
-                                                            Modificar{" "}
-                                                        </button>{" "}
+                                                            Modificar
+                                                        </button>
                                                         <button
                                                             className="delete-btn"
                                                             onClick={() =>
-                                                                Delete_Event_Fun(
-                                                                    event.id,
-                                                                )
+                                                                Delete_Event_Fun(event.id)
                                                             }
                                                         >
-                                                            Eliminar{" "}
-                                                        </button>{" "}
-                                                    </div>{" "}
-                                                </div>{" "}
+                                                            Eliminar
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <div className="event-card-body">
-                                                    <p className="event-title text-xl text-white capitalize">
-                                                        {" "}
-                                                        {event.title}{" "}
-                                                    </p>{" "}
-                                                </div>{" "}
+                                                    <p className="event-title text-xl text-white capitalize">{event.title}</p>
+                                                </div>
                                             </div>
                                         ) : null,
-                                    )}{" "}
-                                </div>{" "}
+                                    )}
+                                </div>
                             </div>
-                        )}{" "}
-                    </div>{" "}
-                </div>{" "}
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
-
     );
 }
