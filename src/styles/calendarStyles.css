@@ -12,8 +12,9 @@
   }
   
   .react-calendar{
-    width: 90%;
-    border: none;
-    background-color: transparent;
-    font-size: x-large;
+    @apply w-[90%] border-none bg-transparent text-xl
+  }
+
+  .react-calendar__month-view__weekdays__weekday abbr{
+    @apply font-light no-underline
   }
