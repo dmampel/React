@@ -12,13 +12,14 @@ function App() {
   const handleClick = () =>{
     setTheme((prevTheme) => !prevTheme);
   }
+  const [title, setTitle] = useState('');
   return (
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Home theme={theme} setTheme={setTheme} handleClick={handleClick}/>} />  {/* Ruta para Home */}
+          <Route path="/" element={<Home theme={theme} setTheme={setTheme} handleClick={handleClick} title={title} setTitle={setTitle} />} />  {/* Ruta para Home */}
           <Route path="/in" element={<In theme={theme} handleClick={handleClick}/>} />  {/* Ruta para In */}
-          <Route path="/mycalendar" element={<BigCalendar theme={theme} handleClick={handleClick}/>} />  {/* Ruta para MyCalendar */}
+          <Route path="/mycalendar" element={<BigCalendar theme={theme} handleClick={handleClick} title={title} />} />  {/* Ruta para MyCalendar */}
         </Routes>
       </Router>
     </div>

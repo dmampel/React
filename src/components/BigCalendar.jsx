@@ -5,7 +5,7 @@ import '../styles/calendarStyles.css';
 import { VscTrash } from "react-icons/vsc";
 import { CiEdit } from "react-icons/ci";
 
-export default function BigCalendar({ theme, handleClick }) {
+export default function BigCalendar({ theme, handleClick, title }) {
     const [selectedDate, setSelectedDate] = useState(null);
     const [eventName, setEventName] = useState("");
     const [events, setEvents] = useState([]);
@@ -73,7 +73,7 @@ export default function BigCalendar({ theme, handleClick }) {
         <div className={`${theme ? 'bg-gradient-to-l from-white to-purple-500 text-black' : 'bg-gradient-to-r from-black to-blue-900 text-white'} min-h-screen`}>
             <Header theme={theme} handleClick={handleClick} />
             <div className="app flex flex-col gap-20">
-                <h1 className="text-white font-light text-7xl text-center">Mi Calendario</h1>
+                <h1 className="text-white font-light text-6xl text-center"><strong className="underline decoration-pink-500 capitalize">{title}</strong>, tu Calendario</h1>
                 <div className="container flex flex-col mb-16 mx-auto">
                     <div className="calendar-container rounded-3xl text-center shadow-inner shadow-slate-700 bg-transparent">
                         <Calendar
@@ -113,14 +113,14 @@ export default function BigCalendar({ theme, handleClick }) {
 
                         {events.length > 0 && (
                             <div className="event-list mt-10">
-                                <h2 className="mb-5 text-3xl font-light">Eventos Actuales</h2>
+                                <h2 className="mb-5 text-xl font-light">Eventos Actuales</h2>
                                 <div className="event-cards flex flex-row">
                                     {events.map((event) => (
-                                        <div key={event.id} className="event-card rounded-3xl">
+                                        <div key={event.id} className="event-card rounded-3xl flex flex-col items-center justify-center">
                                             <div className="event-card-body">
                                                 <p className="event-title text-xl text-white capitalize">{event.title}</p>
                                             </div>
-                                            <div className="event-card-header gap-2">
+                                            <div className="event-card-header flex flex-col justify-between items-center gap-2">
                                                 <span className="event-date">{event.date.toDateString()}</span>
                                                 <div className=" flex flex-row gap-6">
                                                     <button

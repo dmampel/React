@@ -3,9 +3,9 @@ import Form from './Form.jsx'
 import {Fade, Bounce, Zoom, Flip, JackInTheBox, Slide } from "react-awesome-reveal";
 import { Link } from 'react-router-dom';
 
-export default function MainContent({theme}) {
+export default function MainContent({theme, title, setTitle}) {
   
-  const [title, setTitle] = useState('');
+  // const [title, setTitle] = useState('');
   const [isInputVisible, setInputVisible] = useState(true);
   
   
@@ -32,7 +32,6 @@ export default function MainContent({theme}) {
      <Zoom delay='100' className={isInputVisible ? 'visible' : 'hidden'}>
         {isInputVisible && <Form theme={theme} onFormSubmit={handleFormSubmit} setTitle={setTitle} />}
      </Zoom>
-
     
     </div>
   );
