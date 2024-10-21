@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Header from './Header';
 import '../styles/calendarStyles.css';
+import { VscTrash } from "react-icons/vsc";
+import { CiEdit } from "react-icons/ci";
 
 export default function BigCalendar({ theme, handleClick }) {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -12,21 +14,30 @@ export default function BigCalendar({ theme, handleClick }) {
     useEffect(() => {
         const storedEvents = JSON.parse(localStorage.getItem("events"));
         if (storedEvents) {
-            setEvents(storedEvents);
+            // Convertir las fechas que son strings de nuevo a objetos Date
+            const eventsWithDates = storedEvents.map(event => ({
+                ...event,
+                date: new Date(event.date) // Asegurarse de convertir la fecha
+            }));
+            setEvents(eventsWithDates);
         }
     }, []);
 
     // Guardar eventos en Local Storage cada vez que cambien
     useEffect(() => {
-        localStorage.setItem("events", JSON.stringify(events));
+        if (events.length > 0) {
+            localStorage.setItem("events", JSON.stringify(events));
+        }
     }, [events]);
 
     const Date_Click_Fun = (date) => {
         setSelectedDate(date);
     };
+
     const Event_Data_Update = (event) => {
         setEventName(event.target.value);
     };
+
     const Create_Event_Fun = () => {
         if (selectedDate && eventName) {
             const newEvent = {
@@ -39,6 +50,7 @@ export default function BigCalendar({ theme, handleClick }) {
             setEventName("");
         }
     };
+
     const Update_Event_Fun = (eventId, newName) => {
         const updated_Events = events.map((event) => {
             if (event.id === eventId) {
@@ -51,6 +63,7 @@ export default function BigCalendar({ theme, handleClick }) {
         });
         setEvents(updated_Events);
     };
+
     const Delete_Event_Fun = (eventId) => {
         const updated_Events = events.filter((event) => event.id !== eventId);
         setEvents(updated_Events);
@@ -61,7 +74,7 @@ export default function BigCalendar({ theme, handleClick }) {
             <Header theme={theme} handleClick={handleClick} />
             <div className="app flex flex-col gap-20">
                 <h1 className="text-white font-light text-7xl text-center">Mi Calendario</h1>
-                <div className="container flex flex-row mb-16 mx-auto">
+                <div className="container flex flex-col mb-16 mx-auto">
                     <div className="calendar-container rounded-3xl text-center shadow-inner shadow-slate-700 bg-transparent">
                         <Calendar
                             value={selectedDate}
@@ -80,54 +93,60 @@ export default function BigCalendar({ theme, handleClick }) {
                             }
                         />
                     </div>
-                    <div className="event-container self-start w-[40%]">
-                        {selectedDate && (
-                            <div className="event-form">
-                                <h2 className="mb-10 text-3xl font-light">Eventos</h2>
-                                <p className="text-white font-light mb-5 text-xl">Fecha Seleccionada: <strong className="underline decoration-emerald-400">{selectedDate.toDateString()}</strong></p>
-                                <input className="rounded-full" type="text" placeholder="Evento..." value={eventName} onChange={Event_Data_Update} />
-                                <button className="create-btn rounded-full" onClick={Create_Event_Fun}>
-                                    Agregar
-                                </button>
-                            </div>
-                        )}
-                        {events.length > 0 && selectedDate && (
+                    <div className="event-container mt-10 w-full">
+                        <div className="event-form">
+                            <h2 className="mb-10 text-3xl font-light">Eventos</h2>
+                            <p className="text-white font-light mb-5 text-xl">
+                                Fecha Seleccionada: <strong className="underline decoration-emerald-400">{selectedDate ? selectedDate.toDateString() : "Ninguna"}</strong>
+                            </p>
+                            <input
+                                className="rounded-full"
+                                type="text"
+                                placeholder="Evento..."
+                                value={eventName}
+                                onChange={Event_Data_Update}
+                            />
+                            <button className="create-btn rounded-full" onClick={Create_Event_Fun}>
+                                Agregar
+                            </button>
+                        </div>
+
+                        {events.length > 0 && (
                             <div className="event-list mt-10">
                                 <h2 className="mb-5 text-3xl font-light">Eventos Actuales</h2>
-                                <div className="event-cards">
-                                    {events.map((event) =>
-                                        event.date.toDateString() === selectedDate.toDateString() ? (
-                                            <div key={event.id} className="event-card rounded-3xl">
-                                                <div className="event-card-header">
-                                                    <span className="event-date">{event.date.toDateString()}</span>
-                                                    <div className="event-actions">
-                                                        <button
-                                                            className="update-btn"
-                                                            onClick={() =>
-                                                                Update_Event_Fun(
-                                                                    event.id,
-                                                                    prompt("ENTER NEW TITLE"),
-                                                                )
-                                                            }
-                                                        >
-                                                            Modificar
-                                                        </button>
-                                                        <button
-                                                            className="delete-btn"
-                                                            onClick={() =>
-                                                                Delete_Event_Fun(event.id)
-                                                            }
-                                                        >
-                                                            Eliminar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div className="event-card-body">
-                                                    <p className="event-title text-xl text-white capitalize">{event.title}</p>
+                                <div className="event-cards flex flex-row">
+                                    {events.map((event) => (
+                                        <div key={event.id} className="event-card rounded-3xl">
+                                            <div className="event-card-body">
+                                                <p className="event-title text-xl text-white capitalize">{event.title}</p>
+                                            </div>
+                                            <div className="event-card-header gap-2">
+                                                <span className="event-date">{event.date.toDateString()}</span>
+                                                <div className=" flex flex-row gap-6">
+                                                    <button
+                                                        className=" text-blue-500 text-2xl hover:scale-150 transition hover:text-blue-900"
+                                                        onClick={() =>
+                                                            Update_Event_Fun(
+                                                                event.id,
+                                                                prompt("Ingresa el nuevo evento"),
+                                                            )
+                                                        }
+                                                    >
+                                                        <CiEdit />
+                                                    </button>
+                                                    <button
+                                                        className=" text-red-500 text-2xl hover:scale-150 transition hover:text-red-900"
+                                                        onClick={() =>
+                                                            Delete_Event_Fun(event.id)
+                                                        }
+                                                    >
+                                                        <VscTrash />
+                                                    </button>
                                                 </div>
                                             </div>
-                                        ) : null,
-                                    )}
+                                            
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         )}
