@@ -9,6 +9,15 @@ export default function BigCalendar({ theme, handleClick, title }) {
     const [selectedDate, setSelectedDate] = useState(null);
     const [eventName, setEventName] = useState("");
     const [events, setEvents] = useState([]);
+    const dayColors = {
+        0: "#22e4bd", // Domingo
+        1: "#25b0eb", // Lunes
+        2: "#00c853", // Martes
+        3: "#f47954", // Miércoles
+        4: "#9877d6", // Jueves
+        5: "#f75188", // Viernes
+        6: "#c2b8b8", // Sábado
+    };
 
     // Cargar eventos desde Local Storage al iniciar el componente
     useEffect(() => {
@@ -68,6 +77,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
         const updated_Events = events.filter((event) => event.id !== eventId);
         setEvents(updated_Events);
     };
+   
 
     return (
         <div className={`${theme ? 'bg-gradient-to-l from-white to-purple-500 text-black' : 'bg-gradient-to-r from-black to-blue-900 text-white'} min-h-screen`}>
@@ -75,23 +85,25 @@ export default function BigCalendar({ theme, handleClick, title }) {
             <div className="app flex flex-col gap-20">
                 <h1 className="text-white font-light text-6xl text-center"><strong className="underline decoration-pink-500 capitalize">{title}</strong>, tu Calendario</h1>
                 <div className="container flex flex-col mb-16 mx-auto">
-                    <div className="calendar-container rounded-3xl text-center shadow-inner shadow-slate-700 bg-transparent">
+                    <div className="calendar-container text-center ">
+                        
                         <Calendar
                             value={selectedDate}
                             onClickDay={Date_Click_Fun}
-                            tileClassName={({ date }) =>
-                                selectedDate &&
-                                    date.toDateString() === selectedDate.toDateString()
+                            tileClassName={({ date }) => {
+                                const eventForDate = events.find(event => event.date.toDateString() === date.toDateString());
+                                const dayOfWeek = date.getDay(); // Obtener el día de la semana (0-6)
+
+                                if (eventForDate) {
+                                    return `event-marked-${dayOfWeek}`; // Asignar clase basada en el día de la semana
+                                }
+
+                                return selectedDate && date.toDateString() === selectedDate.toDateString()
                                     ? "selected"
-                                    : events.some(
-                                        (event) =>
-                                            event.date.toDateString() ===
-                                            date.toDateString(),
-                                    )
-                                        ? "event-marked"
-                                        : ""
-                            }
+                                    : "";
+                            }}
                         />
+                        
                     </div>
                     <div className="event-container mt-10 w-full">
                         <div className="event-form">
@@ -114,39 +126,42 @@ export default function BigCalendar({ theme, handleClick, title }) {
                         {events.length > 0 && (
                             <div className="event-list mt-10">
                                 <h2 className="mb-5 text-xl font-light">Eventos Actuales</h2>
-                                <div className="event-cards flex flex-row">
-                                    {events.map((event) => (
-                                        <div key={event.id} className="event-card rounded-3xl flex flex-col items-center justify-center">
-                                            <div className="event-card-body">
-                                                <p className="event-title text-xl text-white capitalize">{event.title}</p>
-                                            </div>
-                                            <div className="event-card-header flex flex-col justify-between items-center gap-2">
-                                                <span className="event-date">{event.date.toDateString()}</span>
-                                                <div className=" flex flex-row gap-6">
-                                                    <button
-                                                        className=" text-blue-500 text-2xl hover:scale-150 transition hover:text-blue-900"
-                                                        onClick={() =>
-                                                            Update_Event_Fun(
-                                                                event.id,
-                                                                prompt("Ingresa el nuevo evento"),
-                                                            )
-                                                        }
-                                                    >
-                                                        <CiEdit />
-                                                    </button>
-                                                    <button
-                                                        className=" text-red-500 text-2xl hover:scale-150 transition hover:text-red-900"
-                                                        onClick={() =>
-                                                            Delete_Event_Fun(event.id)
-                                                        }
-                                                    >
-                                                        <VscTrash />
-                                                    </button>
-                                                </div>
-                                            </div>
+                                <div className="event-cards flex flex-row gap-4">
+                                    {events
+                                        .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordenar los eventos por fecha
+                                        .map((event) => {
+                                            const dayOfWeek = new Date(event.date).getDay(); // Obtener el día de la semana del evento
+                                            const backgroundColor = dayColors[dayOfWeek]; // Asignar color basado en el día
                                             
-                                        </div>
-                                    ))}
+                                            return (
+                                                <div 
+                                                    key={event.id} 
+                                                    className="event-card rounded-3xl flex flex-col items-center justify-center shadow-2xl shadow-black"
+                                                    style={{ backgroundColor }} // Aplicar color de fondo al evento
+                                                >
+                                                    <div className="event-card-body">
+                                                        <p className="event-title font-medium text-xl text-white capitalize">{event.title}</p>
+                                                    </div>
+                                                    <div className="event-card-header flex flex-col justify-between items-center gap-2">
+                                                        <span className="event-date">{new Date(event.date).toDateString()}</span>
+                                                        <div className="flex flex-row gap-6">
+                                                            <button
+                                                                className="text-blue-500 text-2xl hover:scale-150 transition hover:text-blue-900"
+                                                                onClick={() => Update_Event_Fun(event.id, prompt("Ingresa el nuevo evento"))}
+                                                            >
+                                                                <CiEdit />
+                                                            </button>
+                                                            <button
+                                                                className="text-[#830a0a] text-2xl hover:scale-150 transition hover:text-red-900"
+                                                                onClick={() => Delete_Event_Fun(event.id)}
+                                                            >
+                                                                <VscTrash />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                 </div>
                             </div>
                         )}

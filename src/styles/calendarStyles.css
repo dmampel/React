@@ -187,7 +187,7 @@
 .react-calendar__navigation {
   display: flex;
   height: 44px;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   padding-top: 2rem;
   
 }
@@ -215,14 +215,16 @@
   text-align: center;
   text-transform: uppercase;
   font-size: x-large;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: lighter;
   text-decoration: none;
   color: #007bff;
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
+  font-size: xx-large;
+  font-weight: bold;
+  padding: 2rem 1rem;
 }
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
@@ -234,7 +236,7 @@
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: #d10000;
+  color: #b61a1aa8;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -271,10 +273,7 @@
   color: #ff267f
 }
 
-.react-calendar__tile--active {
-  background: #007bff;
-  color: white;
-}
+
 
 .event-form {
   margin-bottom: 20px;
@@ -301,7 +300,7 @@
 }
 
 .create-btn:hover {
-  background-color: #e90d69;
+  background-color: #ac0b4e;
 }
 
 .event-list {
@@ -341,17 +340,99 @@
   display: flex;
 }
 
-.selected {
-  background-color: transparent;
-  color: #ff267f;
-  
-}
-
-.event-marked {
-  background-color:  green;
-  
+/* Estilo para los días que tienen eventos */
+.event-marked abbr {
+  background-color: #00c853;
   color: white;
-  
+  border-radius: 50%;
+  border: 2px solid #004d40;
+  padding: 0.5rem;
 }
 
+/* Estilo adicional cuando se selecciona un día */
+.selected abbr{
+  background-color: transparent;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #ac0b4e;
+  padding: 0.5rem;
+}
 
+.event-marked-0 abbr{ /* Domingo */
+  background-color: #22e4bd;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #099795;
+  padding: 0.5rem;
+}
+
+.event-marked-1 abbr{ /* Lunes */
+  background-color: #25b0eb;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #0f5c9f;
+  padding: 0.5rem;
+}
+
+.event-marked-2 abbr{ /* Martes */
+  background-color: #00c853;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #004d40;
+  padding: 0.5rem;
+}
+
+.event-marked-3 abbr{ /* Miércoles */
+  background-color: #f47954;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #83260a;
+  padding: 0.5rem;
+}
+
+.event-marked-4 abbr{ /* Jueves */
+  background-color: #9877d6;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #4527a0;
+  padding: 0.5rem;
+}
+
+.event-marked-5 abbr{ /* Viernes */
+  background-color: #f75188;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #ad1457;
+  padding: 0.5rem;
+}
+
+.event-marked-6 abbr{ /* Sábado */
+  background-color: #c2b8b8;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid #545453;
+  padding: 0.5rem;
+}
+
+/* Estilos para los días de la semana en el encabezado */
+.react-calendar__month-view__weekdays__weekday:nth-child(1) {
+  color: #25b0eb; /* Lunes */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(2) {
+  color: #00c853; /* Martes */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(3) {
+  color: #f47954; /* Miércoles */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(4) {
+  color: #9877d6; /* Jueves */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(5) {
+  color: #f75188; /* Viernes */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(6) {
+  color: #c2b8b8; /* Sábado */
+}
+.react-calendar__month-view__weekdays__weekday:nth-child(7) {
+  color: #22e4bd; /* Domingo */
+}
