@@ -80,7 +80,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
    
 
     return (
-        <div className={`${theme ? 'bg-gradient-to-l from-white to-purple-500 text-black' : 'bg-gradient-to-r from-black to-blue-900 text-white'} min-h-screen`}>
+        <div className={`${theme ? 'bg-gradient-to-l from-white to-purple-500 text-gray-800' : 'bg-gradient-to-r from-black to-blue-900 text-slate-200'} min-h-screen`}>
             <Header theme={theme} handleClick={handleClick} />
             <div className="app flex flex-col gap-20">
                 
@@ -143,10 +143,10 @@ export default function BigCalendar({ theme, handleClick, title }) {
                                                     style={{ backgroundColor }} // Aplicar color de fondo al evento
                                                 >
                                                     <div className="event-card-body">
-                                                        <p className="event-title font-medium text-xl text-white capitalize">{event.title}</p>
+                                                        <p className="event-title font-medium text-small text-white capitalize">{event.title}</p>
                                                     </div>
                                                     <div className="event-card-header flex flex-row justify-between items-center gap-10">
-                                                        <span className="event-date">{new Date(event.date).toDateString()}</span>
+                                                        <span className="event-date text-xs">{new Date(event.date).toDateString()}</span>
                                                         <div className="flex flex-row gap-4">
                                                             <button
                                                                 className="text-blue-500 text-2xl hover:scale-150 transition hover:text-blue-900"

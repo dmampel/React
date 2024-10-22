@@ -263,11 +263,13 @@
 
 .react-calendar__tile:enabled {
   transition: transform 0.3s ease-in-out; /* Aplica la transición solo a la transformación */
+
+  &:hover {
+    transform: scale(1.8); /* Escala el tile al hacer hover */
+  }
 }
 
-.react-calendar__tile:enabled:hover {
-  transform: scale(1.8); /* Escala el tile al hacer hover */
-}
+
 
 .react-calendar__tile--hasActive {
   color: #ff267f
@@ -297,10 +299,11 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s;
-}
 
-.create-btn:hover {
-  background-color: #ac0b4e;
+
+  &:hover {
+    background-color: #ac0b4e;
+  }
 }
 
 .event-list {
@@ -322,11 +325,12 @@
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 4px rgba(235, 231, 231, 0.1);
-}
 
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 }
 
 
