@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 export default function Header({theme, handleClick}){
  
   return(
-    <header className={`mb-36 bg-blur-900 p-5 shadow-2xl cursor-pointer ${theme ? 'shadow-blue-300          hover:shadow-blue-400':'shadow-pink-700 hover:shadow-pink-900'} transition-shadow`}>
+    <header className={`mb-36 bg-blur-900 p-5 shadow-2xl cursor-pointer ${theme ? 'shadow-blue-300 hover:shadow-blue-400':'shadow-pink-700 hover:shadow-pink-900'} transition-shadow`}>
       <nav className='flex justify-between'>
         <img className='animate-pulse' src={logo} width='75' alt='react-logo'/>
         <ul className='flex flex-row items-center gap-x-10 text-xl'>

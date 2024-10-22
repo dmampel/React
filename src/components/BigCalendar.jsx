@@ -83,6 +83,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
         <div className={`${theme ? 'bg-gradient-to-l from-white to-purple-500 text-black' : 'bg-gradient-to-r from-black to-blue-900 text-white'} min-h-screen`}>
             <Header theme={theme} handleClick={handleClick} />
             <div className="app flex flex-col gap-20">
+                
                 <h1 className="text-white font-light text-6xl text-center"><strong className="underline decoration-pink-500 capitalize">{title}</strong>, tu Calendario</h1>
                 <div className="container flex flex-row mb-16 mx-auto">
                     <div className="calendar-container text-center ">
@@ -105,7 +106,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
                         />
                         
                     </div>
-                    <div className="event-container mt-10 w-full">
+                    <div className="event-container ">
                         <div className="event-form">
                             <h2 className="mb-10 text-3xl font-light"><strong className="underline decoration-pink-500 capitalize">Eventos</strong></h2>
                             <p className="text-white font-light mb-5 text-xl">
