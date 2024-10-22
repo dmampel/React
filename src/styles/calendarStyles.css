@@ -109,7 +109,7 @@
 .calendar-container {
   flex: 1;
   min-width: 62%;
-  margin: auto;
+  
 }
 
 .event-container {
@@ -329,12 +329,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-
-.event-date {
-  font-size: 1rem;
-  color: #ebcc20;
-}
 
 .event-actions {
   display: flex;

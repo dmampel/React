@@ -84,7 +84,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
             <Header theme={theme} handleClick={handleClick} />
             <div className="app flex flex-col gap-20">
                 <h1 className="text-white font-light text-6xl text-center"><strong className="underline decoration-pink-500 capitalize">{title}</strong>, tu Calendario</h1>
-                <div className="container flex flex-col mb-16 mx-auto">
+                <div className="container flex flex-row mb-16 mx-auto">
                     <div className="calendar-container text-center ">
                         
                         <Calendar
@@ -107,7 +107,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
                     </div>
                     <div className="event-container mt-10 w-full">
                         <div className="event-form">
-                            <h2 className="mb-10 text-3xl font-light">Eventos</h2>
+                            <h2 className="mb-10 text-3xl font-light"><strong className="underline decoration-pink-500 capitalize">Eventos</strong></h2>
                             <p className="text-white font-light mb-5 text-xl">
                                 Fecha Seleccionada: <strong className="underline decoration-emerald-400">{selectedDate ? selectedDate.toDateString() : "Ninguna"}</strong>
                             </p>
@@ -126,7 +126,7 @@ export default function BigCalendar({ theme, handleClick, title }) {
                         {events.length > 0 && (
                             <div className="event-list mt-10">
                                 <h2 className="mb-5 text-xl font-light">Eventos Actuales</h2>
-                                <div className="event-cards flex flex-row gap-4">
+                                <div className="event-cards flex flex-col items-center">
                                     {events
                                         .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordenar los eventos por fecha
                                         .map((event) => {
@@ -136,15 +136,17 @@ export default function BigCalendar({ theme, handleClick, title }) {
                                             return (
                                                 <div 
                                                     key={event.id} 
-                                                    className="event-card rounded-3xl flex flex-col items-center justify-center shadow-2xl shadow-black"
+                                                    className="event-card w-4/5 flex flex-row items-center justify-between pl-5 shadow-2xl shadow-black"
+
+
                                                     style={{ backgroundColor }} // Aplicar color de fondo al evento
                                                 >
                                                     <div className="event-card-body">
                                                         <p className="event-title font-medium text-xl text-white capitalize">{event.title}</p>
                                                     </div>
-                                                    <div className="event-card-header flex flex-col justify-between items-center gap-2">
+                                                    <div className="event-card-header flex flex-row justify-between items-center gap-10">
                                                         <span className="event-date">{new Date(event.date).toDateString()}</span>
-                                                        <div className="flex flex-row gap-6">
+                                                        <div className="flex flex-row gap-4">
                                                             <button
                                                                 className="text-blue-500 text-2xl hover:scale-150 transition hover:text-blue-900"
                                                                 onClick={() => Update_Event_Fun(event.id, prompt("Ingresa el nuevo evento"))}
